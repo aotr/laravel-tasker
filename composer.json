@@ -38,7 +38,8 @@
         "optimize-autoloader": true,
         "allow-plugins": {
             "pestphp/pest-plugin": true
-        }
+        },
+        "vendor-dir": "aotr/laravel-tasker"
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
