@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Support\TaskManifest;
+use Illuminate\Support\Env;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
