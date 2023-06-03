@@ -39,7 +39,7 @@
         "allow-plugins": {
             "pestphp/pest-plugin": true
         },
-        "vendor-dir": "aotr/laravel-tasker"
+        "vendor-dir": "../vendor/aotr/laravel-tasker"
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
