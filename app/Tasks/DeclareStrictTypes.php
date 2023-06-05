@@ -5,10 +5,15 @@ namespace App\Tasks;
 use App\Traits\FindsFiles;
 use Illuminate\Support\Str;
 
-class DeclareStrictTypes
+class DeclareStrictTypesTask
 {
     use FindsFiles;
 
+    /**
+     * Perform the declare strict types task.
+     *
+     * @return int
+     */
     public function perform(): int
     {
         $files = $this->findFiles();
@@ -38,7 +43,7 @@ class DeclareStrictTypes
                 $contents = Str::replaceFirst(
                     '<?php',
                     '<?php' . PHP_EOL . PHP_EOL . 'declare(strict_types=1);',
-                    $contents,
+                    $contents
                 );
             }
 

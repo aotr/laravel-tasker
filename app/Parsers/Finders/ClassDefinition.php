@@ -6,23 +6,49 @@ use PhpParser\Node;
 
 class ClassDefinition
 {
-    public function search(Node $node)
+    /**
+     * Search for class definitions in the given node.
+     *
+     * @param  Node  $node
+     * @return bool
+     */
+    public function search(Node $node): bool
     {
         return $node instanceof Node\Stmt\Class_;
     }
 
-    public function process(array $instances)
+    /**
+     * Process the instances of class definitions and return the formatted output.
+     *
+     * @param  array  $instances
+     * @return array
+     */
+    public function process(array $instances): array
     {
+        $class = $instances[0];
+
         return [
-            'line' => ['start' => $instances[0]->getStartLine(), 'end' => $instances[0]->getEndLine()],
-            'offset' => ['start' => $instances[0]->getStartFilePos(), 'end' => $instances[0]->getEndFilePos()],
-            'constants' => $this->getConstants($instances[0]),
-            'properties' => $this->getProperties($instances[0]),
-            'methods' => $this->getMethods($instances[0]),
+            'line' => [
+                'start' => $class->getStartLine(),
+                'end' => $class->getEndLine(),
+            ],
+            'offset' => [
+                'start' => $class->getStartFilePos(),
+                'end' => $class->getEndFilePos(),
+            ],
+            'constants' => $this->getConstants($class),
+            'properties' => $this->getProperties($class),
+            'methods' => $this->getMethods($class),
         ];
     }
 
-    private function getComments($node)
+    /**
+     * Get the comments associated with the given node.
+     *
+     * @param  Node  $node
+     * @return array|null
+     */
+    private function getComments(Node $node): ?array
     {
         $comments = $node->getComments();
         if (empty($comments)) {
@@ -32,19 +58,37 @@ class ClassDefinition
         $last = array_key_last($comments);
 
         return [
-            'line' => ['start' => $comments[0]->getStartLine(), 'end' => $comments[$last]->getEndLine()],
-            'offset' => ['start' => $comments[0]->getStartFilePos(), 'end' => $comments[$last]->getEndFilePos()],
+            'line' => [
+                'start' => $comments[0]->getStartLine(),
+                'end' => $comments[$last]->getEndLine(),
+            ],
+            'offset' => [
+                'start' => $comments[0]->getStartFilePos(),
+                'end' => $comments[$last]->getEndFilePos(),
+            ],
         ];
     }
 
+    /**
+     * Get the constants defined in the given class.
+     *
+     * @param  Node\Stmt\Class_  $class
+     * @return array
+     */
     private function getConstants(Node\Stmt\Class_ $class): array
     {
         $constants = [];
         foreach ($class->getConstants() as $constant) {
             $name = $constant->consts[0]->name->toString();
             $constants[$name] = [
-                'line' => ['start' => $constant->getStartLine(), 'end' => $constant->getEndLine()],
-                'offset' => ['start' => $constant->getStartFilePos(), 'end' => $constant->getEndFilePos()],
+                'line' => [
+                    'start' => $constant->getStartLine(),
+                    'end' => $constant->getEndLine(),
+                ],
+                'offset' => [
+                    'start' => $constant->getStartFilePos(),
+                    'end' => $constant->getEndFilePos(),
+                ],
                 'comment' => $this->getComments($constant),
                 'name' => $name,
                 'visibility' => $this->getVisibility($constant),
@@ -54,14 +98,26 @@ class ClassDefinition
         return $constants;
     }
 
+    /**
+     * Get the methods defined in the given class.
+     *
+     * @param  Node\Stmt\Class_  $class
+     * @return array
+     */
     private function getMethods(Node\Stmt\Class_ $class): array
     {
         $methods = [];
         foreach ($class->getMethods() as $method) {
             $name = $method->name->toString();
             $methods[$name] = [
-                'line' => ['start' => $method->getStartLine(), 'end' => $method->getEndLine()],
-                'offset' => ['start' => $method->getStartFilePos(), 'end' => $method->getEndFilePos()],
+                'line' => [
+                    'start' => $method->getStartLine(),
+                    'end' => $method->getEndLine(),
+                ],
+                'offset' => [
+                    'start' => $method->getStartFilePos(),
+                    'end' => $method->getEndFilePos(),
+                ],
                 'comment' => $this->getComments($method),
                 'name' => $name,
                 'visibility' => $this->getVisibility($method),
@@ -72,14 +128,26 @@ class ClassDefinition
         return $methods;
     }
 
-    private function getProperties(Node\Stmt\Class_ $class)
+    /**
+     * Get the properties defined in the given class.
+     *
+     * @param  Node\Stmt\Class_  $class
+     * @return array
+     */
+    private function getProperties(Node\Stmt\Class_ $class): array
     {
         $properties = [];
         foreach ($class->getProperties() as $property) {
             $name = $property->props[0]->name->toString();
             $properties[$name] = [
-                'line' => ['start' => $property->getStartLine(), 'end' => $property->getEndLine()],
-                'offset' => ['start' => $property->getStartFilePos(), 'end' => $property->getEndFilePos()],
+                'line' => [
+                    'start' => $property->getStartLine(),
+                    'end' => $property->getEndLine(),
+                ],
+                'offset' => [
+                    'start' => $property->getStartFilePos(),
+                    'end' => $property->getEndFilePos(),
+                ],
                 'comment' => $this->getComments($property),
                 'name' => $name,
                 'visibility' => $this->getVisibility($property),
@@ -90,7 +158,13 @@ class ClassDefinition
         return $properties;
     }
 
-    private function getVisibility($node): string
+    /**
+     * Get the visibility of the given node.
+     *
+     * @param  Node  $node
+     * @return string
+     */
+    private function getVisibility(Node $node): string
     {
         if ($node->isPrivate()) {
             return 'private';

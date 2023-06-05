@@ -3,20 +3,38 @@
 namespace App\Parsers;
 
 use PhpParser\Lexer\Emulative;
+use PhpParser\NodeFinder;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\NameResolver;
 use PhpParser\ParserFactory;
 
 class NikicParser
 {
+    /**
+     * The finder instance.
+     *
+     * @var mixed
+     */
     private $finder;
 
+    /**
+     * Create a new NikicParser instance.
+     *
+     * @param  mixed  $finder
+     * @return void
+     */
     public function __construct($finder)
     {
         $this->finder = $finder;
     }
 
-    public function parse($code)
+    /**
+     * Parse the given code and extract the desired information using the configured finder.
+     *
+     * @param  string  $code
+     * @return array
+     */
+    public function parse(string $code): array
     {
         $lexer = new Emulative([
             'usedAttributes' => [
@@ -35,7 +53,7 @@ class NikicParser
         $nodeTraverser->addVisitor($nameResolver);
         $ast = $nodeTraverser->traverse($ast);
 
-        $nodeFinder = new \PhpParser\NodeFinder();
+        $nodeFinder = new NodeFinder();
         $instances = $nodeFinder->find($ast, [$this->finder, 'search']);
 
         return $this->finder->process($instances);

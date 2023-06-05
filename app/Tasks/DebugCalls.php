@@ -3,11 +3,18 @@
 namespace App\Tasks;
 
 use App\Traits\FindsFiles;
+use App\Parsers\NikicParser;
+use App\Parsers\Finders\DebugCalls;
 
-class DebugCalls
+class DebugCallsTask
 {
     use FindsFiles;
 
+    /**
+     * Perform the debug calls removal task.
+     *
+     * @return int
+     */
     public function perform(): int
     {
         $files = $this->findFiles();
@@ -15,7 +22,7 @@ class DebugCalls
             return 0;
         }
 
-        $finder = new \App\Parsers\NikicParser(new \App\Parsers\Finders\DebugCalls());
+        $parser = new NikicParser(new DebugCalls());
         $failure = false;
 
         foreach ($files as $file) {
@@ -26,7 +33,7 @@ class DebugCalls
                 continue;
             }
 
-            $instances = $finder->parse($contents);
+            $instances = $parser->parse($contents);
             if (empty($instances)) {
                 continue;
             }
@@ -49,12 +56,18 @@ class DebugCalls
         return $failure ? 1 : 0;
     }
 
-    private function displayError(string $path, array $calls)
+    /**
+     * Display the error information.
+     *
+     * @param string $path
+     * @param array $calls
+     * @return void
+     */
+    private function displayError(string $path, array $calls): void
     {
-        echo $path;
-        echo PHP_EOL;
+        echo $path . PHP_EOL;
         foreach ($calls as $call) {
-            echo '  - Line ', $call['line']['start'], ': contains call to `', $call['function'], '`', PHP_EOL;
+            echo '  - Line ' . $call['line']['start'] . ': contains call to `' . $call['function'] . '`' . PHP_EOL;
         }
         echo PHP_EOL;
     }

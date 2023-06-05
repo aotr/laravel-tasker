@@ -5,12 +5,17 @@ namespace App\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static get(string $key, $default)
+ * @method static mixed get(string $key, $default = null)
  */
 class Configuration extends Facade
 {
+    /**
+     * Get the registered name of the component.
+     *
+     * @return string
+     */
     protected static function getFacadeAccessor()
     {
-        return Configuration::class;
+        return \App\Services\Configuration::class;
     }
 }

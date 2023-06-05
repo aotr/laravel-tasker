@@ -2,12 +2,17 @@
 
 namespace App\Tasks;
 
-class FormatCode
+class FormatCodeTask
 {
+    /**
+     * Perform the code formatting task.
+     *
+     * @return int
+     */
     public function perform(): int
     {
-        exec('vendor/bin/pint', result_code: $exit_code);
+        exec('vendor/bin/pint', $output, $exitCode);
 
-        return $exit_code;
+        return $exitCode;
     }
 }

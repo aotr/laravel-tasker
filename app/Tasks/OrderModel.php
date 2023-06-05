@@ -4,7 +4,7 @@ namespace App\Tasks;
 
 use App\Traits\FindsFiles;
 
-class OrderModel
+class OrderModelTask
 {
     use FindsFiles;
 
@@ -20,6 +20,11 @@ class OrderModel
         'custom',
     ];
 
+    /**
+     * Perform the task of ordering model definitions.
+     *
+     * @return int
+     */
     public function perform(): int
     {
         $files = $this->findFiles();
@@ -62,11 +67,18 @@ class OrderModel
         return 0;
     }
 
+    /**
+     * Add method types to the methods array.
+     *
+     * @param  array  $methods
+     * @param  array  $lines
+     * @return array
+     */
     private function addMethodType(array $methods, array $lines): array
     {
         return array_map(
             function ($method) use ($lines) {
-                $method['type'] = $this->methodType($method, $this->extractDefinition($method, $lines));
+                $method['type'] = $this->getMethodType($method, $this->extractDefinition($method, $lines));
 
                 return $method;
             },
@@ -74,6 +86,13 @@ class OrderModel
         );
     }
 
+    /**
+     * Extract the method definition from the lines of code.
+     *
+     * @param  array  $definition
+     * @param  array  $lines
+     * @return string
+     */
     private function extractDefinition(array $definition, array $lines): string
     {
         $start = $definition['comment'] ? $definition['comment']['line']['start'] : $definition['line']['start'];
@@ -81,26 +100,29 @@ class OrderModel
         return implode(array_slice($lines, $start - 1, $definition['line']['end'] - $start + 1));
     }
 
-    private function methodType(array $method, string $block): string
+    /**
+     * Determine the type of a method.
+     *
+     * @param  array  $method
+     * @param  string  $block
+     * @return string
+     */
+    private function getMethodType(array $method, string $block): string
     {
         if ($method['name'] === '__construct') {
             return 'constructor';
         }
 
-        if ($method['visibility'] === 'public'
-            && $method['static']
-            && in_array($method['name'], ['booting', 'boot', 'booted'])) {
+        if ($method['visibility'] === 'public' && $method['static'] && in_array($method['name'], ['booting', 'boot', 'booted'])) {
             return $method['name'];
         }
 
-        // relationship
-        if ($method['visibility'] === 'public'
-            && preg_match('/\s+return\s+\$this->(hasOne|belongsTo|hasMany|belongsToMany|hasManyThrough|morphTo|morphMany|morphToMany|morphedByMany)\(/', $block)) {
+        // Relationship
+        if ($method['visibility'] === 'public' && preg_match('/\s+return\s+\$this->(hasOne|belongsTo|hasMany|belongsToMany|hasManyThrough|morphTo|morphMany|morphToMany|morphedByMany)\(/', $block)) {
             return 'relationship';
         }
 
-        if ((str_starts_with($method['name'], 'get') || str_starts_with($method['name'], 'set'))
-            && str_ends_with($method['name'], 'Attribute')) {
+        if ((str_starts_with($method['name'], 'get') || str_starts_with($method['name'], 'set')) && str_ends_with($method['name'], 'Attribute')) {
             return 'attribute';
         }
 
@@ -115,6 +137,12 @@ class OrderModel
         return 'custom';
     }
 
+    /**
+     * Get the minimum starting line among the definitions.
+     *
+     * @param  array  $instances
+     * @return int
+     */
     private function minLine(array $instances): int
     {
         return min(
@@ -124,6 +152,12 @@ class OrderModel
         );
     }
 
+    /**
+     * Get the maximum starting line among the definitions.
+     *
+     * @param  array  $instances
+     * @return int
+     */
     private function maxLine(array $instances): int
     {
         return max(
@@ -133,6 +167,12 @@ class OrderModel
         );
     }
 
+    /**
+     * Get the minimum starting line among the definitions.
+     *
+     * @param  array  $definitions
+     * @return int
+     */
     private function minStartLine(array $definitions): int
     {
         if (empty($definitions)) {
@@ -145,6 +185,12 @@ class OrderModel
         ));
     }
 
+    /**
+     * Get the maximum starting line among the definitions.
+     *
+     * @param  array  $definitions
+     * @return int
+     */
     private function maxStartLine(array $definitions): int
     {
         if (empty($definitions)) {
@@ -157,29 +203,43 @@ class OrderModel
         ));
     }
 
-    private function orderByName($items): array
+    /**
+     * Order the items by their names.
+     *
+     * @param  array  $items
+     * @return array
+     */
+    private function orderByName(array $items): array
     {
         uksort($items, fn ($a, $b) => strnatcmp($a, $b));
 
         return $items;
     }
 
-    private function orderByType($methods): array
+    /**
+     * Order the methods by their types and names.
+     *
+     * @param  array  $methods
+     * @return array
+     */
+    private function orderByType(array $methods): array
     {
-        usort(
-            $methods,
-            function ($a, $b) {
-                if ($a['type'] === $b['type']) {
-                    return strnatcmp($a['name'], $b['name']);
-                }
-
-                return array_search($a['type'], self::METHOD_ORDER) - array_search($b['type'], self::METHOD_ORDER);
+        usort($methods, function ($a, $b) {
+            if ($a['type'] === $b['type']) {
+                return strnatcmp($a['name'], $b['name']);
             }
-        );
+
+            return array_search($a['type'], self::METHOD_ORDER) - array_search($b['type'], self::METHOD_ORDER);
+        });
 
         return $methods;
     }
 
+    /**
+     * Get the subpath for finding files.
+     *
+     * @return string
+     */
     protected function subPath(): string
     {
         return 'app/Models';

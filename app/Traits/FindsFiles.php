@@ -6,16 +6,31 @@ use App\Facades\Configuration;
 use Illuminate\Support\Str;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\Process;
+/**
+ * Trait FindsFiles
+ *
+ * This trait provides functionality for finding PHP files within a specified subpath, either by scanning the directory
+ * or by using Git to find only dirty files. It is designed to be used in classes or traits that need to perform operations
+ * on a set of PHP files.
+ *
+ * Usage:
+ * - Include the trait in your class or trait.
+ * - Override the `subPath` method to specify the subpath where the PHP files are located.
+ * - You can use the `findFiles` method to retrieve an array of PHP file paths.
+ * - If you want to find only dirty files using Git, you can set the `$dirty` property to `true` and call the `findFiles` method.
+ * - You can also manually set the `$files` property with an array of file paths if you want to bypass the file search.
+ *
+ * @package App\Traits
+ */
 
 trait FindsFiles
 {
     protected array $files = [];
-
     protected bool $dirty = false;
 
-    protected function findFiles()
+    protected function findFiles(): array
     {
-        if (! empty($this->files)) {
+        if (!empty($this->files)) {
             return $this->files;
         }
 
@@ -37,7 +52,7 @@ trait FindsFiles
     {
         $process = tap(new Process(['git', 'status', '--short', '--', '*.php']))->run();
 
-        if (! $process->isSuccessful()) {
+        if (!$process->isSuccessful()) {
             abort(1, 'The [--dirty] option is only available when using Git.');
         }
 
