@@ -6,7 +6,7 @@ use App\Support\TaskManifest;
 use Illuminate\Support\Env;
 use Illuminate\Support\ServiceProvider;
 use App\Facades\Configuration;
-use App\Repositories\ConfigurationRepository;
+use App\Support\ConfigurationRepository;
 
 class AppServiceProvider extends ServiceProvider
 {

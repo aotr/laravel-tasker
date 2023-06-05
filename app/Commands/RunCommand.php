@@ -76,7 +76,14 @@ class RunCommand extends Command
      */
     private function taskRegistry(string $task): string
     {
-        $tasks = resolve(TaskManifest::class)->list();
+        $tasks = [
+            'check-lint' => \App\Tasks\CheckLint::class,
+            'debug-calls' => \App\Tasks\DebugCallsTask::class,
+            'format-code' => \App\Tasks\FormatCodeTask::class,
+            'order-model' => \App\Tasks\OrderModelTask::class,
+            'declare-strict' => \App\Tasks\DeclareStrictTypesTask::class,
+            'remove-docblocks' => \App\Tasks\RemoveDocBlocks::class,
+        ];
 
         if (!isset($tasks[$task])) {
             throw new InvalidArgumentException('Task not registered: ' . $task);

@@ -16,6 +16,6 @@ class Configuration extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return \App\Services\Configuration::class;
+        return Configuration::class;
     }
 }
