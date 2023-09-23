@@ -41,5 +41,6 @@
         "laravel-zero/framework": "Required for using the package with Laravel Zero."
     },
     "minimum-stability": "stable",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "bin": ["tasker"]
 }
