@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tasks;
+namespace Aotr\Tasker\Tasks;
 
 class FormatCodeTask
 {

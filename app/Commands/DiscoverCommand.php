@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Commands;
+namespace Aotr\Tasker\Commands;
 
 use App\Support\TaskManifest;
 use LaravelZero\Framework\Commands\Command;

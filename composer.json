@@ -2,7 +2,7 @@
     "name": "aotr/laravel-tasker",
     "description": "Help to Laravel automate things.",
     "keywords": ["tasker", "laravel", "automate", "console", "cli"],
-    "type": "project",
+    "type": "library",
     "license": "MIT",
     "authors": [
         {
@@ -12,7 +12,6 @@
     ],
     "require": {
         "php": "^8.0",
-        "laravel-zero/framework": "^9.2",
         "laravel-zero/phar-updater": "^1.2",
         "nunomaduro/termwind": "^1.14"
     },
@@ -22,9 +21,7 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/",
-            "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/"
+            "Aotr\\Tasker\\": "app/"
         }
     },
     "autoload-dev": {
@@ -40,7 +37,9 @@
             "pestphp/pest-plugin": true
         }
     },
+    "suggest": {
+        "laravel-zero/framework": "Required for using the package with Laravel Zero."
+    },
     "minimum-stability": "stable",
-    "prefer-stable": true,
-    "bin": ["tasker"]
+    "prefer-stable": true
 }

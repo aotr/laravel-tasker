@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Parsers\Finders;
+namespace Aotr\Tasker\Parsers\Finders;
 
 use PhpParser\Node;
 

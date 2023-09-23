@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Tasks;
+namespace Aotr\Tasker\Tasks;
 
-use App\Traits\FindsFiles;
+use Aotr\Tasker\Traits\FindsFiles;
 
 class RemoveDocBlocks
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Support;
+namespace Aotr\Tasker\Support;
 
 /**
  * The TaskManifest class handles the management of tasks in the project.

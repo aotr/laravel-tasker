@@ -67,7 +67,7 @@ return [
     */
 
     'providers' => [
-        App\Providers\AppServiceProvider::class,
+        Aotr\Tasker\Providers\TaskerServiceProvider::class,
     ],
 
 ];

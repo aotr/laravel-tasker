@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Tasks;
+namespace Aotr\Tasker\Tasks;
 
-use App\Traits\FindsFiles;
-use App\Parsers\NikicParser;
-use App\Parsers\Finders\DebugCalls;
+use Aotr\Tasker\Traits\FindsFiles;
+use Aotr\Tasker\Parsers\NikicParser;
+use Aotr\Tasker\Parsers\Finders\DebugCalls;
 
 class DebugCallsTask
 {

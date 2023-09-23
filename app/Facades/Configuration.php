@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Facades;
+namespace Aotr\Tasker\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

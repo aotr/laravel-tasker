@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits;
+namespace Aotr\Tasker\Traits;
 
 use App\Facades\Configuration;
 use Illuminate\Support\Str;

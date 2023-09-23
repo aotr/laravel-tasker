@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Parsers;
+namespace Aotr\Tasker\Parsers;
 
 use PhpParser\Lexer\Emulative;
 use PhpParser\NodeFinder;

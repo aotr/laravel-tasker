@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace Aotr\Tasker\Providers;
 
 use App\Support\TaskManifest;
 use Illuminate\Support\Env;
@@ -8,7 +8,7 @@ use Illuminate\Support\ServiceProvider;
 use App\Facades\Configuration;
 use App\Support\ConfigurationRepository;
 
-class AppServiceProvider extends ServiceProvider
+class TaskerServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap any application services.

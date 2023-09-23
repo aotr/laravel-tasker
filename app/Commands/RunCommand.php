@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Commands;
+namespace Aotr\Tasker\Commands;
 
-use App\Support\TaskManifest;
-use App\Traits\FindsFiles;
+use Aotr\Tasker\Support\TaskManifest;
+use Aotr\Tasker\Traits\FindsFiles;
 use InvalidArgumentException;
 use LaravelZero\Framework\Commands\Command;
 
@@ -77,14 +77,14 @@ class RunCommand extends Command
     private function taskRegistry(string $task): string
 {
     $tasks = [
-        'check-lint' => \App\Tasks\CheckLint::class,
-        'debug-calls' => \App\Tasks\DebugCallsTask::class,
-        'format-code' => \App\Tasks\FormatCodeTask::class,
-        'order-model' => \App\Tasks\OrderModelTask::class,
-        'declare-strict' => \App\Tasks\DeclareStrictTypesTask::class,
-        'remove-docblocks' => \App\Tasks\RemoveDocBlocks::class,
-        'hook-install' => \App\Tasks\InstallPreCommitHook::class,
-        'hook-manage' => \App\Tasks\ManageGitHooks::class,
+        'check-lint' => \Aotr\Tasker\Tasks\CheckLint::class,
+        'debug-calls' => \Aotr\Tasker\Tasks\DebugCallsTask::class,
+        'format-code' => \Aotr\Tasker\Tasks\FormatCodeTask::class,
+        'order-model' => \Aotr\Tasker\Tasks\OrderModelTask::class,
+        'declare-strict' => \Aotr\Tasker\Tasks\DeclareStrictTypesTask::class,
+        'remove-docblocks' => \Aotr\Tasker\Tasks\RemoveDocBlocks::class,
+        'hook-install' => \Aotr\Tasker\Tasks\InstallPreCommitHook::class,
+        'hook-manage' => \Aotr\Tasker\Tasks\ManageGitHooks::class,
     ];
 
     if (!isset($tasks[$task])) {
