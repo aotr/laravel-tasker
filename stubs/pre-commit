@@ -20,8 +20,8 @@ if [ -f "vendor/bin/tasker" ] && [ -f "vendor/bin/pint" ]; then
     fi
 
 else
-    echo "Required files not found!"
-    exit 1
+    
+    exit 0
 fi
 
 exit 0

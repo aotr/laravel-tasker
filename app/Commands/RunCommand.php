@@ -75,21 +75,32 @@ class RunCommand extends Command
      * @throws InvalidArgumentException if the task is not registered.
      */
     private function taskRegistry(string $task): string
-    {
-        $tasks = [
-            'check-lint' => \App\Tasks\CheckLint::class,
-            'debug-calls' => \App\Tasks\DebugCallsTask::class,
-            'format-code' => \App\Tasks\FormatCodeTask::class,
-            'order-model' => \App\Tasks\OrderModelTask::class,
-            'declare-strict' => \App\Tasks\DeclareStrictTypesTask::class,
-            'remove-docblocks' => \App\Tasks\RemoveDocBlocks::class,
-            'hook-install' => \App\Tasks\InstallPreCommitHook::class,
-        ];
+{
+    $tasks = [
+        'check-lint' => \App\Tasks\CheckLint::class,
+        'debug-calls' => \App\Tasks\DebugCallsTask::class,
+        'format-code' => \App\Tasks\FormatCodeTask::class,
+        'order-model' => \App\Tasks\OrderModelTask::class,
+        'declare-strict' => \App\Tasks\DeclareStrictTypesTask::class,
+        'remove-docblocks' => \App\Tasks\RemoveDocBlocks::class,
+        'hook-install' => \App\Tasks\InstallPreCommitHook::class,
+        'hook-manage' => \App\Tasks\ManageGitHooks::class,
+    ];
 
-        if (!isset($tasks[$task])) {
-            throw new InvalidArgumentException('Task not registered: ' . $task);
-        }
-
-        return $tasks[$task];
+    if (!isset($tasks[$task])) {
+        $this->displayAvailableTasks($tasks);
+        throw new InvalidArgumentException('Invalid task name: ' . $task);
     }
+
+    return $tasks[$task];
+}
+
+private function displayAvailableTasks(array $tasks): void
+{
+    echo "Available tasks:" . PHP_EOL;
+    foreach (array_keys($tasks) as $taskName) {
+        echo "- " . $taskName . PHP_EOL;
+    }
+}
+
 }

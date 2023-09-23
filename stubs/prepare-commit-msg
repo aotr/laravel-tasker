@@ -31,7 +31,7 @@ else
             exit 1
             ;;
         3)
-            echo -n "Please input the new commit message: "
+            echo "Please input the new commit message: "
             read new_commit_message < /dev/tty
             echo "$new_commit_message" > "$1"
             ;;
