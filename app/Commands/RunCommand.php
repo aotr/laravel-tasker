@@ -83,6 +83,7 @@ class RunCommand extends Command
             'order-model' => \App\Tasks\OrderModelTask::class,
             'declare-strict' => \App\Tasks\DeclareStrictTypesTask::class,
             'remove-docblocks' => \App\Tasks\RemoveDocBlocks::class,
+            'hook-install' => \App\Tasks\InstallPreCommitHook::class,
         ];
 
         if (!isset($tasks[$task])) {

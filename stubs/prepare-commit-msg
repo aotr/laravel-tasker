@@ -1,0 +1,46 @@
+#!/bin/sh
+
+# Get the current branch name
+BRANCH_NAME=$(git symbolic-ref --short HEAD)
+
+# Extract the commit message
+COMMIT_MSG=$(cat "$1")
+
+# Check if the branch name is in the commit message
+if echo "$COMMIT_MSG" | grep -q "$BRANCH_NAME"; then
+    exit 0
+else
+    echo "WARNING: Your commit message does not contain the branch name ($BRANCH_NAME)."
+    echo "Suggested commit message: [$BRANCH_NAME] $COMMIT_MSG"
+    echo ""
+    echo "Options:"
+    echo "1) Use the suggested commit message"
+    echo "2) Cancel the commit"
+    echo "3) Input a new commit message"
+    echo "4) Use your entered commit message: $COMMIT_MSG"
+    echo ""
+    echo -n "Please select an option [1/2/3/4]: "
+    read choice < /dev/tty
+
+    case $choice in
+        1)
+            echo "[$BRANCH_NAME] $COMMIT_MSG" > "$1"
+            ;;
+        2)
+            echo "Commit canceled."
+            exit 1
+            ;;
+        3)
+            echo -n "Please input the new commit message: "
+            read new_commit_message < /dev/tty
+            echo "$new_commit_message" > "$1"
+            ;;
+        4)
+            echo "$COMMIT_MSG" > "$1"
+            ;;
+        *)
+            echo "Invalid choice. Commit canceled."
+            exit 1
+            ;;
+    esac
+fi

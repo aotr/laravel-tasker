@@ -1,0 +1,47 @@
+#!/bin/sh
+
+# Check if the required files exist
+if [ -f "vendor/bin/tasker" ] && [ -f "vendor/bin/pint" ]; then
+
+    # Run the commands
+    if ! ./vendor/bin/tasker run check-lint; then
+        echo "Error: check-lint failed!"
+        optionToContinue
+    fi
+
+    if ! ./vendor/bin/tasker run debug-calls; then
+        echo "Error: debug-calls failed!"
+        optionToContinue
+    fi
+
+    if ! ./vendor/bin/tasker run format-code; then
+        echo "Error: format-code failed!"
+        optionToContinue
+    fi
+
+else
+    echo "Required files not found!"
+    exit 1
+fi
+
+exit 0
+
+# Function to provide option to continue or abort
+optionToContinue() {
+    echo "Would you like to fix the issue and commit again or skip this error and continue with the commit?"
+    echo "1) Fix and commit again"
+    echo "2) Skip and continue"
+    read choice
+    case $choice in
+        1)
+            exit 1
+            ;;
+        2)
+            return 0
+            ;;
+        *)
+            echo "Invalid choice. Aborting commit."
+            exit 1
+            ;;
+    esac
+}
