@@ -12,6 +12,7 @@
     ],
     "require": {
         "php": "^8.0",
+        "laravel-zero/framework": "^9.2",
         "laravel-zero/phar-updater": "^1.2",
         "nunomaduro/termwind": "^1.14"
     },
