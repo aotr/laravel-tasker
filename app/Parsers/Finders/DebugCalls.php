@@ -17,7 +17,7 @@ class DebugCalls
         if (! $node instanceof Node\Expr\FuncCall) {
             return false;
         }
-
+        
         if (! $node->name instanceof Node\Name) {
             return false;
         }

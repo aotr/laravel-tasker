@@ -2,11 +2,11 @@
 
 namespace Aotr\Tasker\Providers;
 
-use App\Support\TaskManifest;
+use Aotr\Tasker\Support\TaskManifest;
 use Illuminate\Support\Env;
 use Illuminate\Support\ServiceProvider;
-use App\Facades\Configuration;
-use App\Support\ConfigurationRepository;
+use Aotr\Tasker\Facades\Configuration;
+use Aotr\Tasker\Support\ConfigurationRepository;
 
 class TaskerServiceProvider extends ServiceProvider
 {

@@ -2,7 +2,7 @@
 
 namespace Aotr\Tasker\Traits;
 
-use App\Facades\Configuration;
+use Aotr\Tasker\Facades\Configuration;
 use Illuminate\Support\Str;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\Process;

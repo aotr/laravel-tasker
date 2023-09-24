@@ -74,7 +74,7 @@ class TaskManifest
             $installed = json_decode(file_get_contents($installedJsonPath), true);
             $packages = $installed['packages'] ?? $installed;
         }
-
+        ;
         $this->write(
             collect($packages)
                 ->mapWithKeys(function ($package) {
@@ -94,12 +94,12 @@ class TaskManifest
     private function defaultTasks(): array
     {
         return [
-            'check-lint' => \App\Tasks\CheckLint::class,
-            'debug-calls' => \App\Tasks\DebugCalls::class,
-            'format-code' => \App\Tasks\FormatCode::class,
-            'order-model' => \App\Tasks\OrderModel::class,
-            'declare-strict' => \App\Tasks\DeclareStrictTypes::class,
-            'remove-docblocks' => \App\Tasks\RemoveDocBlocks::class,
+            'check-lint' => \Aotr\Tasker\Tasks\CheckLint::class,
+            'debug-calls' => \Aotr\Tasker\Tasks\DebugCalls::class,
+            'format-code' => \Aotr\Tasker\Tasks\FormatCode::class,
+            'order-model' => \Aotr\Tasker\Tasks\OrderModel::class,
+            'declare-strict' => \Aotr\Tasker\Tasks\DeclareStrictTypes::class,
+            'remove-docblocks' => \Aotr\Tasker\Tasks\RemoveDocBlocks::class,
         ];
     }
 

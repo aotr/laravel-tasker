@@ -7,7 +7,7 @@ use Aotr\Tasker\Traits\FindsFiles;
 class OrderModelTask
 {
     use FindsFiles;
-
+    
     protected const METHOD_ORDER = [
         'constructor',
         'booting',
@@ -32,7 +32,7 @@ class OrderModelTask
             return 0;
         }
 
-        $finder = new \App\Parsers\NikicParser(new \App\Parsers\Finders\ClassDefinition());
+        $finder = new \Aotr\Tasker\Parsers\NikicParser(new \Aotr\Tasker\Parsers\Finders\ClassDefinition());
 
         foreach ($files as $file) {
             $lines = file($file);

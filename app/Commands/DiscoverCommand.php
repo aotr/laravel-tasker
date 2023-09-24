@@ -2,7 +2,7 @@
 
 namespace Aotr\Tasker\Commands;
 
-use App\Support\TaskManifest;
+use Aotr\Tasker\Support\TaskManifest;
 use LaravelZero\Framework\Commands\Command;
 
 class DiscoverCommand extends Command
