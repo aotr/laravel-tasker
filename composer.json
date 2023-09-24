@@ -21,6 +21,7 @@
         "pestphp/pest": "^1.21.3"
     },
     "autoload": {
+        "files": ["bootstrap/app.php"],
         "psr-4": {
             "Aotr\\Tasker\\": "app/"
         }
