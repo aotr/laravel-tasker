@@ -41,5 +41,10 @@
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
-    "bin": ["tasker"]
+    "bin": ["tasker"],
+    "scripts": {
+        "post-package-install": [
+            "@composer install"
+        ]
+    }
 }
