@@ -2,7 +2,7 @@
     "name": "aotr/laravel-tasker",
     "description": "Help to Laravel automate things.",
     "keywords": ["tasker", "laravel", "automate", "console", "cli"],
-    "type": "library",
+    "type": "project",
     "license": "MIT",
     "authors": [
         {
