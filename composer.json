@@ -38,9 +38,6 @@
             "pestphp/pest-plugin": true
         }
     },
-    "suggest": {
-        "laravel-zero/framework": "Required for using the package with Laravel Zero."
-    },
     "minimum-stability": "stable",
     "prefer-stable": true,
     "bin": ["tasker"]
