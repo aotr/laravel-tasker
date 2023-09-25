@@ -34,7 +34,7 @@ class DiscoverCommand extends Command
 
         // Build the task manifest
         $manifest->build();
-
+        ;
         // Iterate through the list of tasks and execute each task
         collect($manifest->list())
             ->keys()
