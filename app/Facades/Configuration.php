@@ -16,6 +16,6 @@ class Configuration extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return Configuration::class;
+        return \Aotr\Tasker\Facades\Configuration::class;
     }
 }
