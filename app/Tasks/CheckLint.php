@@ -43,19 +43,19 @@ class CheckLint
      * @return array [$line, $error]
      */
     private function parseError(array $lines): array
-{
-    preg_match('/PHP (?:Fatal|Parse) error:\s+(?:syntax error, )?(.+?)\s+in\s+.+?\.php\s+on\s+line\s+(\d+)/', $lines[0], $matches);
-    
-    $line = $matches[2] ?? null;
-    $error = $matches[1] ?? null;
-    
-    if ($line === null || $error === null) {
-        // Let's capture the unexpected output for inspection
-        throw new \RuntimeException("Failed to parse error. Output: " . implode("\n", $lines));
-    }
+    {
+        preg_match('/PHP (?:Fatal|Parse) error:\s+(?:syntax error, )?(.+?)\s+in\s+.+?\.php\s+on\s+line\s+(\d+)/', $lines[0], $matches);
+        
+        $line = $matches[2] ?? null;
+        $error = $matches[1] ?? null;
+        
+        if ($line === null || $error === null) {
+            // Let's capture the unexpected output for inspection
+            throw new \RuntimeException("Failed to parse error. Output: " . implode("\n", $lines));
+        }
 
-    return [$line, $error];
-}
+        return [$line, $error];
+    }
 
 
 
